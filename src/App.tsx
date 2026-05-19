@@ -15,9 +15,10 @@ const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
 function getProjectFromLocation() {
   if (typeof window === "undefined") return null;
 
-  const pathname = APP_BASE_PATH && window.location.pathname.startsWith(APP_BASE_PATH)
-    ? window.location.pathname.slice(APP_BASE_PATH.length) || "/"
-    : window.location.pathname;
+  const pathname =
+    APP_BASE_PATH && window.location.pathname.startsWith(APP_BASE_PATH)
+      ? window.location.pathname.slice(APP_BASE_PATH.length) || "/"
+      : window.location.pathname;
 
   const pathMatch = pathname.match(/^\/projeto\/([^/]+)\/?$/);
   if (pathMatch) {
@@ -31,7 +32,9 @@ function getProjectFromLocation() {
 }
 
 export default function App() {
-  const [activeProject, setActiveProject] = useState<ProjectCaseSlug | null>(() => getProjectFromLocation());
+  const [activeProject, setActiveProject] = useState<ProjectCaseSlug | null>(() =>
+    getProjectFromLocation(),
+  );
   const [showMobileDesktopNotice, setShowMobileDesktopNotice] = useState(false);
 
   const [showLoading, setShowLoading] = useState(() => {
@@ -70,8 +73,13 @@ export default function App() {
     if (typeof window === "undefined") return;
     if (showLoading) return;
 
-    const shouldShowOnMobile = window.matchMedia("(max-width: 767px)").matches;
-    const alreadySeen = sessionStorage.getItem(MOBILE_NOTICE_SESSION_KEY) === "true";
+    const shouldShowOnMobile =
+      window.matchMedia("(max-width: 1024px)").matches &&
+      (window.matchMedia("(hover: none)").matches ||
+        window.matchMedia("(pointer: coarse)").matches);
+
+    const alreadySeen =
+      sessionStorage.getItem(MOBILE_NOTICE_SESSION_KEY) === "true";
 
     if (shouldShowOnMobile && !alreadySeen) {
       setShowMobileDesktopNotice(true);
@@ -111,8 +119,16 @@ export default function App() {
   return (
     <>
       {showMobileDesktopNotice ? (
-        <div className="mobile-desktop-notice" role="dialog" aria-modal="false" aria-labelledby="mobile-desktop-notice-title">
-          <div className="mobile-desktop-notice__backdrop" onClick={dismissMobileDesktopNotice} />
+        <div
+          className="mobile-desktop-notice"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="mobile-desktop-notice-title"
+        >
+          <div
+            className="mobile-desktop-notice__backdrop"
+            onClick={dismissMobileDesktopNotice}
+          />
           <div className="mobile-desktop-notice__card">
             <button
               type="button"
@@ -123,11 +139,15 @@ export default function App() {
               ×
             </button>
             <p className="mobile-desktop-notice__eyebrow">Aviso</p>
-            <h2 id="mobile-desktop-notice-title" className="mobile-desktop-notice__title">
+            <h2
+              id="mobile-desktop-notice-title"
+              className="mobile-desktop-notice__title"
+            >
               Para uma melhor experiência
             </h2>
             <p className="mobile-desktop-notice__text">
-              Este portfólio foi pensado principalmente para desktop. Se puder, acesse em uma tela maior para visualizar melhor os detalhes.
+              Este portfólio foi pensado principalmente para desktop. Se puder,
+              acesse em uma tela maior para visualizar melhor os detalhes.
             </p>
             <button
               type="button"
@@ -139,6 +159,7 @@ export default function App() {
           </div>
         </div>
       ) : null}
+
       {showLoading ? (
         <PortfolioLoading
           onFinish={() => {
@@ -147,6 +168,7 @@ export default function App() {
           }}
         />
       ) : null}
+
       {project ? (
         <ProjectCasePage project={project} onBack={closeProject} />
       ) : (
