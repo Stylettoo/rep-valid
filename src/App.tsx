@@ -1,0 +1,105 @@
+import { useEffect, useState } from "react";
+import PortfolioHero from "./components/PortfolioHero";
+import ProjectsSection from "./components/ProjectsSection";
+import AboutSection from "./components/AboutSection";
+import PortfolioLoading from "./components/PortfolioLoading";
+import ThinkingCardsSection from "./components/ThinkingCardsSection";
+import ContactSection from "./components/ContactSection";
+import ProjectCasePage from "./components/ProjectCasePage";
+import { projectCaseMap, type ProjectCaseSlug } from "./data/projectCases";
+
+const LOADING_SESSION_KEY = "portfolio-loading-seen";
+
+function getProjectFromLocation() {
+  if (typeof window === "undefined") return null;
+
+  const pathMatch = window.location.pathname.match(/^\/projeto\/([^/]+)\/?$/);
+  if (pathMatch) {
+    const slug = decodeURIComponent(pathMatch[1]) as ProjectCaseSlug;
+    return slug in projectCaseMap ? slug : null;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const project = params.get("project") as ProjectCaseSlug | null;
+  return project && project in projectCaseMap ? project : null;
+}
+
+export default function App() {
+  const [activeProject, setActiveProject] = useState<ProjectCaseSlug | null>(() => getProjectFromLocation());
+
+  const [showLoading, setShowLoading] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem(LOADING_SESSION_KEY) !== "true";
+  });
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveProject(getProjectFromLocation());
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.removeProperty("overflow");
+    document.documentElement.style.removeProperty("overflow-y");
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.removeProperty("overflow");
+    document.body.style.removeProperty("overflow-y");
+    document.body.style.overflowX = "hidden";
+
+    return () => {
+      document.documentElement.style.removeProperty("overflow");
+      document.documentElement.style.removeProperty("overflow-y");
+      document.documentElement.style.overflowX = "hidden";
+      document.body.style.removeProperty("overflow");
+      document.body.style.removeProperty("overflow-y");
+      document.body.style.overflowX = "hidden";
+    };
+  }, [showLoading]);
+
+  const openProject = (slug: ProjectCaseSlug) => {
+    const url = new URL(window.location.href);
+    url.pathname = `/projeto/${slug}`;
+    url.searchParams.delete("project");
+    window.history.pushState({}, "", url);
+    setActiveProject(slug);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const closeProject = () => {
+    const url = new URL(window.location.href);
+    url.pathname = "/";
+    url.searchParams.delete("project");
+    window.history.pushState({}, "", url);
+    setActiveProject(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const project = activeProject ? projectCaseMap[activeProject] : null;
+
+  return (
+    <>
+      {showLoading ? (
+        <PortfolioLoading
+          onFinish={() => {
+            sessionStorage.setItem(LOADING_SESSION_KEY, "true");
+            setShowLoading(false);
+          }}
+        />
+      ) : null}
+      {project ? (
+        <ProjectCasePage project={project} onBack={closeProject} />
+      ) : (
+        <>
+          <PortfolioHero />
+          <ProjectsSection onOpenProject={openProject} />
+          <AboutSection />
+          <ThinkingCardsSection />
+          <ContactSection />
+        </>
+      )}
+    </>
+  );
+}

@@ -1,0 +1,75 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.vite/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firebaserc.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Cache and temporary files
+.cache/
+.temp/
+.tmp/
+tmp/
+temp/
+*.tmp
+*.temp
+
+# IDE and editor settings
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Local tooling and backups
+.codex-temp/
+backups/
+dev-server.log
+vite.log
+
+# Local reference files not used by the app
+photos/HERO-reference.png
+photos/foco.png
+photos/processo.png
+src/assets/README.md
+src/assets/alvo.svg
+src/assets/camera.svg
+src/assets/cappuccino.svg
+src/assets/headphone.svg
+src/assets/lapis.svg
+src/assets/lupa.svg
+src/assets/macbook.svg
+src/assets/post-it.svg
+src/assets/prendedores.svg
+src/assets/ticket-aviao.svg
