@@ -9,6 +9,7 @@ import ProjectCasePage from "./components/ProjectCasePage";
 import { projectCaseMap, type ProjectCaseSlug } from "./data/projectCases";
 
 const LOADING_SESSION_KEY = "portfolio-loading-seen";
+const MOBILE_NOTICE_SESSION_KEY = "portfolio-mobile-desktop-notice-seen";
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 function getProjectFromLocation() {
@@ -31,6 +32,7 @@ function getProjectFromLocation() {
 
 export default function App() {
   const [activeProject, setActiveProject] = useState<ProjectCaseSlug | null>(() => getProjectFromLocation());
+  const [showMobileDesktopNotice, setShowMobileDesktopNotice] = useState(false);
 
   const [showLoading, setShowLoading] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -64,6 +66,18 @@ export default function App() {
     };
   }, [showLoading]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (showLoading) return;
+
+    const shouldShowOnMobile = window.matchMedia("(max-width: 767px)").matches;
+    const alreadySeen = sessionStorage.getItem(MOBILE_NOTICE_SESSION_KEY) === "true";
+
+    if (shouldShowOnMobile && !alreadySeen) {
+      setShowMobileDesktopNotice(true);
+    }
+  }, [showLoading]);
+
   const openProject = (slug: ProjectCaseSlug) => {
     const url = new URL(window.location.href);
     if (APP_BASE_PATH) {
@@ -87,10 +101,44 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const dismissMobileDesktopNotice = () => {
+    sessionStorage.setItem(MOBILE_NOTICE_SESSION_KEY, "true");
+    setShowMobileDesktopNotice(false);
+  };
+
   const project = activeProject ? projectCaseMap[activeProject] : null;
 
   return (
     <>
+      {showMobileDesktopNotice ? (
+        <div className="mobile-desktop-notice" role="dialog" aria-modal="false" aria-labelledby="mobile-desktop-notice-title">
+          <div className="mobile-desktop-notice__backdrop" onClick={dismissMobileDesktopNotice} />
+          <div className="mobile-desktop-notice__card">
+            <button
+              type="button"
+              className="mobile-desktop-notice__close"
+              aria-label="Fechar aviso"
+              onClick={dismissMobileDesktopNotice}
+            >
+              ×
+            </button>
+            <p className="mobile-desktop-notice__eyebrow">Aviso</p>
+            <h2 id="mobile-desktop-notice-title" className="mobile-desktop-notice__title">
+              Para uma melhor experiência
+            </h2>
+            <p className="mobile-desktop-notice__text">
+              Este portfólio foi pensado principalmente para desktop. Se puder, acesse em uma tela maior para visualizar melhor os detalhes.
+            </p>
+            <button
+              type="button"
+              className="mobile-desktop-notice__button"
+              onClick={dismissMobileDesktopNotice}
+            >
+              Entendi
+            </button>
+          </div>
+        </div>
+      ) : null}
       {showLoading ? (
         <PortfolioLoading
           onFinish={() => {
