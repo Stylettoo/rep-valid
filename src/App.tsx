@@ -9,11 +9,16 @@ import ProjectCasePage from "./components/ProjectCasePage";
 import { projectCaseMap, type ProjectCaseSlug } from "./data/projectCases";
 
 const LOADING_SESSION_KEY = "portfolio-loading-seen";
+const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 function getProjectFromLocation() {
   if (typeof window === "undefined") return null;
 
-  const pathMatch = window.location.pathname.match(/^\/projeto\/([^/]+)\/?$/);
+  const pathname = APP_BASE_PATH && window.location.pathname.startsWith(APP_BASE_PATH)
+    ? window.location.pathname.slice(APP_BASE_PATH.length) || "/"
+    : window.location.pathname;
+
+  const pathMatch = pathname.match(/^\/projeto\/([^/]+)\/?$/);
   if (pathMatch) {
     const slug = decodeURIComponent(pathMatch[1]) as ProjectCaseSlug;
     return slug in projectCaseMap ? slug : null;
@@ -61,8 +66,13 @@ export default function App() {
 
   const openProject = (slug: ProjectCaseSlug) => {
     const url = new URL(window.location.href);
-    url.pathname = `/projeto/${slug}`;
-    url.searchParams.delete("project");
+    if (APP_BASE_PATH) {
+      url.pathname = `${APP_BASE_PATH}/`;
+      url.searchParams.set("project", slug);
+    } else {
+      url.pathname = `/projeto/${slug}`;
+      url.searchParams.delete("project");
+    }
     window.history.pushState({}, "", url);
     setActiveProject(slug);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -70,7 +80,7 @@ export default function App() {
 
   const closeProject = () => {
     const url = new URL(window.location.href);
-    url.pathname = "/";
+    url.pathname = APP_BASE_PATH ? `${APP_BASE_PATH}/` : "/";
     url.searchParams.delete("project");
     window.history.pushState({}, "", url);
     setActiveProject(null);

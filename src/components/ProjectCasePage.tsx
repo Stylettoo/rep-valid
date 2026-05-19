@@ -216,7 +216,7 @@ export default function ProjectCasePage({
   const zoomInGallery = () => updateGalleryScale(galleryZoomScale + 0.35);
   const zoomOutGallery = () => updateGalleryScale(galleryZoomScale - 0.35);
 
-  const getTouchDistance = (touches: TouchList) => {
+  const getTouchDistance = (touches: ArrayLike<{ clientX: number; clientY: number }>) => {
     const [firstTouch, secondTouch] = [touches[0], touches[1]];
     return Math.hypot(secondTouch.clientX - firstTouch.clientX, secondTouch.clientY - firstTouch.clientY);
   };
