@@ -17,10 +17,10 @@ type ProjectItem = {
 const projects = [
   {
     slug: "govbr-redesign",
-    title: "Gov.br Redesign",
+    title: "Reimaginando a experiência do Gov.br",
     description:
-      "Redesign focado em clareza, hierarquia da informa\u00e7\u00e3o e acesso mais r\u00e1pido aos servi\u00e7os.",
-    tags: ["UX/UI", "Research", "Prototype"],
+      "Redesign estratégico focado em reduzir carga cognitiva e tornar o acesso aos serviços públicos mais claro e intuitivo.",
+    tags: ["UX Strategy", "Redesign", "Arquitetura da Informação"],
     variant: "mockup-1",
     showTape: true,
     showMicroDotOne: true,
@@ -190,8 +190,8 @@ export default function ProjectsSection({
                 <p className="project-description">{project.description}</p>
 
                 <div className="tag-list">
-                  {project.tags.map((tag, index) => (
-                    <span key={tag} className={`tag ${index === 0 ? "tag-primary" : ""}`}>
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="tag">
                       {tag}
                     </span>
                   ))}
