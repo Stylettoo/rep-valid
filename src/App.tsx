@@ -9,7 +9,6 @@ import ProjectCasePage from "./components/ProjectCasePage";
 import { projectCaseMap, type ProjectCaseSlug } from "./data/projectCases";
 
 const LOADING_SESSION_KEY = "portfolio-loading-seen";
-const MOBILE_NOTICE_SESSION_KEY = "portfolio-mobile-desktop-notice-seen";
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 function getProjectFromLocation() {
@@ -78,10 +77,7 @@ export default function App() {
       (window.matchMedia("(hover: none)").matches ||
         window.matchMedia("(pointer: coarse)").matches);
 
-    const alreadySeen =
-      sessionStorage.getItem(MOBILE_NOTICE_SESSION_KEY) === "true";
-
-    if (shouldShowOnMobile && !alreadySeen) {
+    if (shouldShowOnMobile) {
       setShowMobileDesktopNotice(true);
     }
   }, [showLoading]);
@@ -110,7 +106,6 @@ export default function App() {
   };
 
   const dismissMobileDesktopNotice = () => {
-    sessionStorage.setItem(MOBILE_NOTICE_SESSION_KEY, "true");
     setShowMobileDesktopNotice(false);
   };
 
