@@ -72,10 +72,7 @@ export default function App() {
     if (typeof window === "undefined") return;
     if (showLoading) return;
 
-    const shouldShowOnMobile =
-      window.matchMedia("(max-width: 1024px)").matches &&
-      (window.matchMedia("(hover: none)").matches ||
-        window.matchMedia("(pointer: coarse)").matches);
+    const shouldShowOnMobile = window.innerWidth <= 1024;
 
     if (shouldShowOnMobile) {
       setShowMobileDesktopNotice(true);
