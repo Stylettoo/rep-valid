@@ -84,14 +84,23 @@ export default function PortfolioLoading({
   useEffect(() => {
     let cancelled = false;
     const removers: Array<() => void> = [];
+    const homeHeroImageSelectors = [
+      '#home img[fetchpriority="high"]',
+      "#home .hero-desktop-postit",
+      "#home .hero-mobile-postit",
+    ];
+    const projectHeroImageSelectors = [
+      ".visualCard img",
+      ".heroImageFrame img",
+    ];
+    const trackedImages = [
+      ...document.querySelectorAll(
+        [...homeHeroImageSelectors, ...projectHeroImageSelectors].join(", "),
+      ),
+    ].filter((img) => !img.closest(".portfolio-loading")) as HTMLImageElement[];
 
-    const trackedImages = [...document.querySelectorAll("img")].filter(
-      (img) => !img.closest(".portfolio-loading"),
-    ) as HTMLImageElement[];
-
-    let total = trackedImages.length + 1;
+    let total = trackedImages.length;
     let completed = 0;
-    let finalLoadMarked = false;
 
     if ("fonts" in document) {
       total += 1;
@@ -135,24 +144,19 @@ export default function PortfolioLoading({
       });
     });
 
-    const markWindowLoad = () => {
-      if (finalLoadMarked) return;
-      finalLoadMarked = true;
-      markComplete();
-    };
-
-    if (document.readyState === "complete") {
-      markWindowLoad();
-    } else {
-      window.addEventListener("load", markWindowLoad, { once: true });
-      removers.push(() => window.removeEventListener("load", markWindowLoad));
-    }
-
     if ("fonts" in document) {
       void document.fonts.ready.then(() => {
         if (cancelled) return;
         markComplete();
       });
+    }
+
+    if (!trackedImages.length && !("fonts" in document)) {
+      setRealReady(true);
+      setRealProgress(100);
+      return () => {
+        cancelled = true;
+      };
     }
 
     update();
