@@ -13,6 +13,21 @@ const navItems = [
   { label: "Resumo PDF", hash: "#resumo-pdf" },
 ];
 
+function isProjectView() {
+  if (typeof window === "undefined") return false;
+
+  const basePath = APP_BASE_URL.replace(/\/$/, "");
+  const pathname =
+    basePath && window.location.pathname.startsWith(basePath)
+      ? window.location.pathname.slice(basePath.length) || "/"
+      : window.location.pathname;
+
+  if (/^\/projeto\/[^/]+\/?$/.test(pathname)) return true;
+
+  const params = new URLSearchParams(window.location.search);
+  return params.has("project");
+}
+
 export default function SiteHeader({
   homePrefix = APP_BASE_URL,
   theme: controlledTheme,
@@ -52,7 +67,8 @@ export default function SiteHeader({
   };
 
   const normalizedHomePrefix = homePrefix.endsWith("/") ? homePrefix : `${homePrefix}/`;
-  const buildHomeHref = (hash: string) => `${normalizedHomePrefix}${hash}`;
+  const buildHomeHref = (hash: string) =>
+    isProjectView() ? `${normalizedHomePrefix}${hash}` : hash;
 
   return (
     <header className="fixed left-1/2 top-6 z-50 flex w-[calc(100%-28px)] -translate-x-1/2 justify-center">
