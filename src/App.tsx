@@ -113,7 +113,7 @@ export default function App() {
 
   return (
     <>
-      {showMobileDesktopNotice ? (
+      {!project && showMobileDesktopNotice ? (
         <div
           className="mobile-desktop-notice"
           role="dialog"
