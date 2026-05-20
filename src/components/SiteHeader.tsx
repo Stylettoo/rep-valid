@@ -4,6 +4,8 @@ import sunLightIcon from "../assets/sun-light.svg";
 
 export type ThemeMode = "light" | "dark";
 
+const APP_BASE_URL = import.meta.env.BASE_URL;
+
 const navItems = [
   { label: "Projetos", hash: "#projetos" },
   { label: "Sobre mim", hash: "#sobre-mim" },
@@ -12,7 +14,7 @@ const navItems = [
 ];
 
 export default function SiteHeader({
-  homePrefix = "/",
+  homePrefix = APP_BASE_URL,
   theme: controlledTheme,
   onToggleTheme: controlledToggleTheme,
 }: {
@@ -49,11 +51,14 @@ export default function SiteHeader({
     document.documentElement.setAttribute("data-theme", nextTheme);
   };
 
+  const normalizedHomePrefix = homePrefix.endsWith("/") ? homePrefix : `${homePrefix}/`;
+  const buildHomeHref = (hash: string) => `${normalizedHomePrefix}${hash}`;
+
   return (
     <header className="fixed left-1/2 top-6 z-50 flex w-[calc(100%-28px)] -translate-x-1/2 justify-center">
       <div className="hero-nav relative flex min-h-[60px] w-full max-w-[730px] items-center justify-between rounded-full bg-[var(--bg-surface)] px-6 shadow-[var(--shadow-nav)] sm:px-7 md:min-h-[68px] md:px-8">
         <a
-          href={`${homePrefix}#home`}
+          href={buildHomeHref("#home")}
           aria-label="Ir para o início"
           className="hero-brand text-[13px] font-extrabold uppercase tracking-[-0.02em] text-[var(--text-inverse)] sm:text-[14px] md:text-[16px]"
         >
@@ -61,7 +66,7 @@ export default function SiteHeader({
         </a>
 
         <a
-          href={`${homePrefix}#resumo-pdf`}
+          href={buildHomeHref("#resumo-pdf")}
           className="hero-nav-link absolute right-16 top-1/2 inline-flex -translate-y-1/2 items-center text-[13px] font-semibold text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--text-inverse)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-surface)] md:hidden"
         >
           Resumo PDF
@@ -71,7 +76,7 @@ export default function SiteHeader({
           {navItems.map((item) => (
             <a
               key={item.label}
-              href={`${homePrefix}${item.hash}`}
+              href={buildHomeHref(item.hash)}
               className="hero-nav-link text-[13px] font-semibold text-[var(--text-muted)] transition-colors duration-300 hover:text-[var(--text-inverse)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-surface)]"
             >
               {item.label}
