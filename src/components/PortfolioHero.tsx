@@ -1,5 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import macbookImg from "../../photos/MACBOOK.avif";
+import mobileNotebookImg from "../assets/notabeook-mobile.png";
+import mobileHeadphoneImg from "../assets/headphone-mobile.png";
+import mobileCameraImg from "../assets/camera-mobile.png";
+import mobilePlantImg from "../assets/plant-mobile.png";
+import mobileCoffeeImg from "../assets/coffee-mobile.png";
+import mobileTicketImg from "../assets/ticket-mobile.png";
+import mobileGlassesImg from "../assets/glasses-mobile.png";
+import mobilePaperImg from "../assets/paper-mobile.png";
+import mobilePostItImg from "../assets/postit-mobile.png";
+import mobileClipsImg from "../assets/clips-mobile.png";
+import mobileClipImg from "../assets/clip-mobile.png";
 import headphoneImg from "../../photos/HEADPHONE.png";
 import cameraImg from "../../photos/CAMERA-ZVE10.png";
 import cappuccinoImg from "../../photos/CAPUCCINO.avif";
@@ -192,6 +203,7 @@ export default function PortfolioHero() {
   };
 
   const currentTicketImg = theme === "dark" ? ticketDarkImg : ticketImg;
+  const currentMobileTicketImg = theme === "dark" ? ticketDarkImg : mobileTicketImg;
   const themedDecorativeItems = decorativeItems.map((item) =>
     item.key === "ticket" ? { ...item, src: currentTicketImg } : item,
   );
@@ -272,9 +284,9 @@ export default function PortfolioHero() {
         <div className="relative z-10 mx-auto min-h-[calc(100vh-28px)] max-w-[1728px] px-4 pt-28 md:px-6 md:pt-32 lg:px-7">
           <SiteHeader homePrefix="" theme={theme} onToggleTheme={handleToggleTheme} />
 
-          <section className="relative flex min-h-[calc(100vh-160px)] flex-col items-center justify-start px-4 pb-10 pt-8 text-center md:hidden">
+          <section className="hero-mobile-stage relative flex min-h-[calc(100vh-160px)] flex-col items-center justify-start px-3 pb-8 pt-3 text-center md:hidden">
             <img
-              src={macbookImg}
+              src={mobileNotebookImg}
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--notebook"
@@ -282,7 +294,7 @@ export default function PortfolioHero() {
             />
 
             <img
-              src={headphoneImg}
+              src={mobileHeadphoneImg}
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--headphone"
@@ -290,7 +302,7 @@ export default function PortfolioHero() {
             />
 
             <img
-              src={cappuccinoImg}
+              src={mobileCoffeeImg}
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--cafe"
@@ -298,7 +310,15 @@ export default function PortfolioHero() {
             />
 
             <img
-              src={cameraImg}
+              src={mobilePlantImg}
+              alt=""
+              aria-hidden="true"
+              className="hero-mobile-item hero-mobile-item--plant"
+              style={{ animation: "heroFloat 6.9s cubic-bezier(0.4,0,0.2,1) infinite" }}
+            />
+
+            <img
+              src={mobileCameraImg}
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--camera"
@@ -306,7 +326,7 @@ export default function PortfolioHero() {
             />
 
             <img
-              src={currentTicketImg}
+              src={currentMobileTicketImg}
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--ticket"
@@ -314,36 +334,68 @@ export default function PortfolioHero() {
             />
 
             <img
-              src={postItImg}
+              src={mobileClipImg}
+              alt=""
+              aria-hidden="true"
+              className="hero-mobile-item hero-mobile-item--clip"
+              style={{ animation: "heroFloat 6.1s cubic-bezier(0.4,0,0.2,1) infinite" }}
+            />
+
+            <img
+              src={mobileGlassesImg}
+              alt=""
+              aria-hidden="true"
+              className="hero-mobile-item hero-mobile-item--glasses"
+              style={{ animation: "heroFloat 6.6s cubic-bezier(0.4,0,0.2,1) infinite" }}
+            />
+
+            <img
+              src={mobilePaperImg}
+              alt=""
+              aria-hidden="true"
+              className="hero-mobile-item hero-mobile-item--paper"
+              style={{ animation: "heroFloat 6.3s cubic-bezier(0.4,0,0.2,1) infinite" }}
+            />
+
+            <img
+              src={mobileClipsImg}
+              alt=""
+              aria-hidden="true"
+              className="hero-mobile-item hero-mobile-item--clips"
+              style={{ animation: "heroFloat 6.1s cubic-bezier(0.4,0,0.2,1) infinite" }}
+            />
+
+            <img
+              src={mobilePostItImg}
               alt="Post-its com a frase Insights transformam experiências"
               className="hero-mobile-postit"
             />
 
-            <div className="relative z-10 inline-flex flex-col items-start">
+            <div className="hero-mobile-title-wrap relative z-10 inline-flex flex-col items-start">
               <span
                 aria-hidden="true"
-                className="hero-title-highlight absolute left-[-8px] top-[31%] -z-10 h-[26px] w-[62%] rounded-[4px]"
+                className="hero-title-highlight hero-mobile-title-highlight hero-mobile-title-highlight--top absolute -z-10 rounded-[4px]"
               />
               <span
                 aria-hidden="true"
-                className="hero-title-highlight absolute bottom-[1%] left-[-8px] -z-10 h-[26px] w-[103%] rounded-[4px]"
+                className="hero-title-highlight hero-mobile-title-highlight hero-mobile-title-highlight--bottom absolute -z-10 rounded-[4px]"
               />
 
-              <h1 className="hero-title text-left text-[64px] font-bold uppercase leading-[0.92] tracking-[-0.04em]">
+              <h1 className="hero-title hero-mobile-title text-left font-bold uppercase">
                 UX-UI
                 <br />
                 DESIGNER
               </h1>
             </div>
 
-            <p className="relative z-10 mt-10 max-w-[336px] text-left text-[26px] font-normal leading-[0.98] tracking-[-0.045em] text-[var(--text-secondary)]">
+            <p className="hero-mobile-copy relative z-10 text-left font-normal text-[var(--text-secondary)]">
               Transformando sistemas complexos
               <br /> em <span className="font-extrabold">experiências simples e intuitivas</span>
             </p>
 
             <a
               href="#projetos"
-              className="hero-cta relative z-10 mt-12 inline-flex min-h-[60px] min-w-[224px] items-center justify-center rounded-full px-8 text-[20px] font-extrabold tracking-[-0.03em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]"
+              className="hero-cta hero-mobile-cta relative z-10 inline-flex items-center justify-center rounded-full font-extrabold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)]"
             >
               Ver projetos
             </a>
