@@ -144,7 +144,7 @@ html[data-theme="dark"] .hero-cta:hover {
   position: fixed;
   inset: 0;
   z-index: 1200;
-  display: none;
+  display: block;
 }
 
 .mobile-desktop-notice__backdrop {
@@ -233,12 +233,6 @@ html[data-theme="dark"] .mobile-desktop-notice__close {
 html[data-theme="dark"] .mobile-desktop-notice__button {
   background: linear-gradient(180deg, rgba(32, 32, 32, 0.92), rgba(18, 18, 18, 0.98));
   color: #E8B93A;
-}
-
-@media (max-width: 1024px) {
-  .mobile-desktop-notice {
-    display: block;
-  }
 }
 
 .hero-mobile-item,

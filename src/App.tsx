@@ -34,7 +34,10 @@ export default function App() {
   const [activeProject, setActiveProject] = useState<ProjectCaseSlug | null>(() =>
     getProjectFromLocation(),
   );
-  const [showMobileDesktopNotice, setShowMobileDesktopNotice] = useState(false);
+  const [showMobileDesktopNotice, setShowMobileDesktopNotice] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth <= 1024 && !getProjectFromLocation();
+  });
 
   const [showLoading, setShowLoading] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -71,13 +74,8 @@ export default function App() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (showLoading) return;
-
-    const shouldShowOnMobile = window.innerWidth <= 1024;
-
-    if (shouldShowOnMobile) {
-      setShowMobileDesktopNotice(true);
-    }
-  }, [showLoading]);
+    setShowMobileDesktopNotice(window.innerWidth <= 1024 && !getProjectFromLocation());
+  }, [showLoading, activeProject]);
 
   const openProject = (slug: ProjectCaseSlug) => {
     const url = new URL(window.location.href);
