@@ -54,6 +54,8 @@ const projects = [
   },
 ] satisfies readonly ProjectItem[];
 
+const visibleProjects = projects.filter((project) => project.slug === "govbr-redesign");
+
 type ProjectsCursorVariant = "default" | "card" | "link";
 
 function ProjectMockup({ variant }: { variant: ProjectItem["variant"] }) {
@@ -168,7 +170,7 @@ export default function ProjectsSection({
         </header>
 
         <div className="projects-grid">
-          {projects.map((project) => (
+          {visibleProjects.map((project) => (
             <article
               key={project.slug}
               className="project-card"

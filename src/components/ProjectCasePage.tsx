@@ -661,7 +661,7 @@ export default function ProjectCasePage({
               <h2 className="ctaTitle">
                 Tem um projeto
                 <br />
-                que precisa sair do papel?
+                que precisa tirar do papel?
               </h2>
               <a
                 className="ctaButton"
