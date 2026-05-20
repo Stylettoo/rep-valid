@@ -66,6 +66,8 @@ function ProjectMockup({ variant }: { variant: ProjectItem["variant"] }) {
           src={govBrHeroMockup}
           alt="Preview do projeto Gov.br Redesign"
           className="projects-cover-image projects-cover-image-gov"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     );

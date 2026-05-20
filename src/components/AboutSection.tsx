@@ -155,6 +155,8 @@ export default function AboutSection() {
 
               <img
                 className={`badge-mock ${isDragging ? "is-dragging" : ""}`}
+                loading="lazy"
+                decoding="async"
                 src={aboutBadgeImg}
                 alt="Crachá Edilson Borges"
                 draggable={false}

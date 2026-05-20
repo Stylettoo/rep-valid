@@ -114,6 +114,8 @@ function DecorativeItem({
         aria-hidden="true"
         className={`${baseClassName} ${item.className}`}
         style={style}
+        decoding="async"
+        fetchPriority={item.key === "notebook" ? "high" : "auto"}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />
@@ -290,6 +292,8 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--notebook"
+              decoding="async"
+              fetchPriority="high"
               style={{ animation: "heroFloat 6.2s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -298,6 +302,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--headphone"
+              decoding="async"
               style={{ animation: "heroFloat 6.8s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -306,6 +311,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--cafe"
+              decoding="async"
               style={{ animation: "heroFloat 6.4s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -314,6 +320,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--plant"
+              decoding="async"
               style={{ animation: "heroFloat 6.9s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -322,6 +329,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--camera"
+              decoding="async"
               style={{ animation: "heroFloat 7.4s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -330,6 +338,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--ticket"
+              decoding="async"
               style={{ animation: "heroFloat 6.7s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -338,6 +347,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--clip"
+              decoding="async"
               style={{ animation: "heroFloat 6.1s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -346,6 +356,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--glasses"
+              decoding="async"
               style={{ animation: "heroFloat 6.6s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -354,6 +365,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--paper"
+              decoding="async"
               style={{ animation: "heroFloat 6.3s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -362,6 +374,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-mobile-item hero-mobile-item--clips"
+              decoding="async"
               style={{ animation: "heroFloat 6.1s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -369,6 +382,7 @@ export default function PortfolioHero() {
               src={mobilePostItImg}
               alt="Post-its com a frase Insights transformam experiências"
               className="hero-mobile-postit"
+              decoding="async"
             />
 
             <div className="hero-mobile-title-wrap relative z-10 inline-flex flex-col items-start">
@@ -435,6 +449,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-scene-item hero-scene-item--clip"
+              decoding="async"
               style={{ animation: "heroFloat 7.2s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -470,6 +485,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-scene-item hero-scene-item--plant"
+              decoding="async"
               style={{ animation: "heroFloat 6.3s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -479,6 +495,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-scene-item hero-scene-item--paper"
+              decoding="async"
               style={{ animation: "heroFloat 6.1s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -488,6 +505,7 @@ export default function PortfolioHero() {
               alt=""
               aria-hidden="true"
               className="hero-scene-item hero-scene-item--glasses"
+              decoding="async"
               style={{ animation: "heroFloat 6.5s cubic-bezier(0.4,0,0.2,1) infinite" }}
             />
 
@@ -497,6 +515,7 @@ export default function PortfolioHero() {
                 src={postItImg}
                 alt="Post-its com a frase Insights transformam experiências"
                 className="hero-desktop-postit"
+                decoding="async"
                 onMouseEnter={() => setCursorVariant("note")}
                 onMouseLeave={() => setCursorVariant("default")}
               />

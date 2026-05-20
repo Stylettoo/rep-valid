@@ -74,6 +74,8 @@ function ThinkingImageCard({
           alt={showBase ? "" : alt}
           aria-hidden={showBase ? "true" : undefined}
           className={`mindset-gallery-image ${showBase ? "mindset-gallery-image-back" : ""}`}
+          loading="lazy"
+          decoding="async"
         />
         {showBase ? (
           <div className="mindset-card-copy-overlay" aria-hidden="true">
@@ -100,6 +102,8 @@ export default function ThinkingCardsSection() {
           alt=""
           aria-hidden="true"
           className="mindset-floating-corner-image"
+          loading="lazy"
+          decoding="async"
         />
 
         <div className="mindset-grid mindset-grid--gallery">

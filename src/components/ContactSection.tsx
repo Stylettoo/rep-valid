@@ -271,6 +271,8 @@ export default function ContactSection() {
                 alt=""
                 aria-hidden="true"
                 className="contact-sticky-image"
+                loading="lazy"
+                decoding="async"
               />
               <span className="contact-sticky-text">{stickyPhrase}</span>
             </button>
