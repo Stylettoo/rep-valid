@@ -10,6 +10,7 @@ import { projectCaseMap, type ProjectCaseSlug } from "./data/projectCases";
 
 const LOADING_SESSION_KEY = "portfolio-loading-seen";
 const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, "");
+const APP_TITLE = "Borges UX Portfolio";
 
 function getProjectFromLocation() {
   if (typeof window === "undefined") return null;
@@ -76,6 +77,28 @@ export default function App() {
     if (showLoading) return;
     setShowMobileDesktopNotice(window.innerWidth <= 1024 && !getProjectFromLocation());
   }, [showLoading, activeProject]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const marqueeSource = `${APP_TITLE}   •   `;
+    let index = 0;
+
+    const updateTitle = () => {
+      const nextTitle =
+        marqueeSource.slice(index) + marqueeSource.slice(0, index);
+      document.title = nextTitle.trim();
+      index = (index + 1) % marqueeSource.length;
+    };
+
+    updateTitle();
+    const intervalId = window.setInterval(updateTitle, 220);
+
+    return () => {
+      window.clearInterval(intervalId);
+      document.title = APP_TITLE;
+    };
+  }, []);
 
   const openProject = (slug: ProjectCaseSlug) => {
     const url = new URL(window.location.href);
