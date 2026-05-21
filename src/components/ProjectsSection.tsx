@@ -1,4 +1,3 @@
-import { useState } from "react";
 import govBrHeroMockup from "../assets/mockup-gov-br.png";
 import type { ProjectCaseSlug } from "../data/projectCases";
 
@@ -55,8 +54,6 @@ const projects = [
 ] satisfies readonly ProjectItem[];
 
 const visibleProjects = projects.filter((project) => project.slug === "govbr-redesign");
-
-type ProjectsCursorVariant = "default" | "card" | "link";
 
 function ProjectMockup({ variant }: { variant: ProjectItem["variant"] }) {
   if (variant === "mockup-1") {
@@ -123,43 +120,8 @@ export default function ProjectsSection({
 }: {
   onOpenProject: (slug: ProjectCaseSlug) => void;
 }) {
-  const [cursorVisible, setCursorVisible] = useState(false);
-  const [cursorVariant, setCursorVariant] = useState<ProjectsCursorVariant>("default");
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-
-  const getCursorClasses = () => {
-    switch (cursorVariant) {
-      case "card":
-        return "h-12 w-12 border-[2px] bg-[color:var(--cursor-shell)] after:h-3 after:w-3";
-      case "link":
-        return "h-12 w-24 rounded-full border-[2px] bg-[color:var(--cursor-shell)] after:h-2.5 after:w-8 after:rounded-full";
-      default:
-        return "h-8 w-8 border-[2px] bg-[color:var(--cursor-shell)] after:h-2.5 after:w-2.5";
-    }
-  };
-
   return (
-    <section
-      id="projetos"
-      className="projects-section md:cursor-none"
-      onMouseMove={(event) => {
-        setCursorVisible(true);
-        setCursorPosition({ x: event.clientX, y: event.clientY });
-      }}
-      onMouseLeave={() => {
-        setCursorVisible(false);
-        setCursorVariant("default");
-      }}
-    >
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none fixed left-0 top-0 z-[90] hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[var(--border-subtle)] shadow-[var(--shadow-cursor)] transition-[width,height,opacity,transform,background-color,border-radius] duration-200 ease-out after:rounded-full after:bg-[var(--cursor-core)] after:content-[''] md:flex ${cursorVisible ? "opacity-100" : "opacity-0"} ${getCursorClasses()}`}
-        style={{
-          left: cursorPosition.x,
-          top: cursorPosition.y,
-        }}
-      />
-
+    <section id="projetos" className="projects-section">
       <div className="projects-container">
         <header className="projects-header">
           <div className="projects-title-wrap">
@@ -176,8 +138,7 @@ export default function ProjectsSection({
             <article
               key={project.slug}
               className="project-card"
-              onMouseEnter={() => setCursorVariant("card")}
-              onMouseLeave={() => setCursorVariant("default")}
+              data-cursor="card"
             >
               {project.showTape ? <span className="projects-tape" /> : null}
 
@@ -199,9 +160,8 @@ export default function ProjectsSection({
 
                 <button
                   type="button"
+                  data-cursor="link"
                   className="project-link"
-                  onMouseEnter={() => setCursorVariant("link")}
-                  onMouseLeave={() => setCursorVariant("card")}
                   onClick={() => onOpenProject(project.slug)}
                 >
                   Ver projeto <span className="project-arrow"></span>

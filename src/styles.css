@@ -96,6 +96,13 @@ body *::after {
     opacity 220ms ease;
 }
 
+@media (min-width: 768px) and (pointer: fine) {
+  .app-cursor-surface,
+  .app-cursor-surface * {
+    cursor: none !important;
+  }
+}
+
 .hero-cta {
   background: #171717;
   color: var(--accent-primary);

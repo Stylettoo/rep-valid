@@ -102,7 +102,7 @@ function DecorativeItem({
   onMouseLeave?: () => void;
 }) {
   const isInteractive = item.key in audioByItem;
-  const baseClassName = `${isInteractive ? "cursor-pointer" : "pointer-events-none"} select-none will-change-transform motion-reduce:transform-none motion-reduce:animate-none`;
+  const baseClassName = `${isInteractive ? "pointer-events-auto" : "pointer-events-none"} select-none will-change-transform motion-reduce:transform-none motion-reduce:animate-none`;
 
   const style = item.animation ? { animation: item.animation } : undefined;
 
@@ -116,6 +116,7 @@ function DecorativeItem({
         style={style}
         decoding="async"
         fetchPriority={item.key === "notebook" ? "high" : "auto"}
+        data-cursor={isInteractive ? "media" : undefined}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />
@@ -131,13 +132,8 @@ function DecorativeItem({
   );
 }
 
-type CursorVariant = "default" | "media" | "note" | "cta";
-
 export default function PortfolioHero() {
   const audioRefs = useRef<Partial<Record<keyof typeof audioByItem, HTMLAudioElement>>>({});
-  const [cursorVariant, setCursorVariant] = useState<CursorVariant>("default");
-  const [cursorVisible, setCursorVisible] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [headphoneActive, setHeadphoneActive] = useState(false);
   const [theme, setTheme] = useState<ThemeMode>("light");
 
@@ -186,16 +182,6 @@ export default function PortfolioHero() {
     audio.currentTime = 0;
   };
 
-  const handleCursorMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    setCursorVisible(true);
-    setCursorPosition({ x: event.clientX, y: event.clientY });
-  };
-
-  const handleCursorLeave = () => {
-    setCursorVisible(false);
-    setCursorVariant("default");
-  };
-
   const handleToggleTheme = () => {
     const nextTheme: ThemeMode = theme === "light" ? "dark" : "light";
 
@@ -210,24 +196,9 @@ export default function PortfolioHero() {
     item.key === "ticket" ? { ...item, src: currentTicketImg } : item,
   );
 
-  const getCursorClasses = () => {
-    switch (cursorVariant) {
-      case "media":
-        return "h-16 w-16 border-[3px] bg-[color:var(--cursor-shell)] after:h-4 after:w-4";
-      case "note":
-        return "h-14 w-14 rotate-12 rounded-[8px] border-[2px] bg-[color:var(--cursor-shell)] after:h-4 after:w-4";
-      case "cta":
-        return "h-14 w-28 rounded-full border-[3px] bg-[color:var(--cursor-shell)] after:h-3 after:w-12 after:rounded-full";
-      default:
-        return "h-10 w-10 border-[2px] bg-[color:var(--cursor-shell)] after:h-3 after:w-3";
-    }
-  };
-
   return (
     <div
-      className="min-h-screen bg-[var(--bg-frame)] p-[14px] [font-family:Inter,system-ui,sans-serif] md:cursor-none"
-      onMouseMove={handleCursorMove}
-      onMouseLeave={handleCursorLeave}
+      className="min-h-screen bg-[var(--bg-frame)] p-[14px] [font-family:Inter,system-ui,sans-serif]"
     >
       <style>{`
         @keyframes heroFloat {
@@ -259,15 +230,6 @@ export default function PortfolioHero() {
           }
         }
       `}</style>
-
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none fixed left-0 top-0 z-[100] hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[var(--border-subtle)] shadow-[var(--shadow-cursor)] transition-[width,height,opacity,transform,background-color,border-radius] duration-200 ease-out after:rounded-full after:bg-[var(--cursor-core)] after:content-[''] md:flex ${cursorVisible ? "opacity-100" : "opacity-0"} ${getCursorClasses()}`}
-        style={{
-          left: cursorPosition.x,
-          top: cursorPosition.y,
-        }}
-      />
 
       <main
         id="home"
@@ -427,7 +389,6 @@ export default function PortfolioHero() {
                     ? () => {
                         handleAudioEnter(item.key as keyof typeof audioByItem);
                         if (item.key === "headphone") setHeadphoneActive(true);
-                        setCursorVariant("media");
                       }
                     : undefined
                 }
@@ -436,7 +397,6 @@ export default function PortfolioHero() {
                     ? () => {
                         handleAudioLeave(item.key as keyof typeof audioByItem);
                         if (item.key === "headphone") setHeadphoneActive(false);
-                        setCursorVariant("default");
                       }
                     : undefined
                 }
@@ -516,8 +476,7 @@ export default function PortfolioHero() {
                 alt="Post-its com a frase Insights transformam experiências"
                 className="hero-desktop-postit"
                 decoding="async"
-                onMouseEnter={() => setCursorVariant("note")}
-                onMouseLeave={() => setCursorVariant("default")}
+                data-cursor="note"
               />
 
               {/* ====== TITULO PRINCIPAL ====== */}
@@ -549,9 +508,8 @@ export default function PortfolioHero() {
               {/* ====== BOTAO CTA ====== */}
               <a
                 href="#projetos"
+                data-cursor="cta"
                 className="hero-cta mt-12 ml-[250px] inline-flex min-h-[62px] min-w-[200px] items-center justify-center rounded-full px-10 text-[22px] font-extrabold tracking-[-0.03em] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] md:min-h-[62px] md:min-w-[244px] md:text-[22px]"
-                onMouseEnter={() => setCursorVariant("cta")}
-                onMouseLeave={() => setCursorVariant("default")}
               >
                 Ver projetos
               </a>
