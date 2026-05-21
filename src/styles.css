@@ -3287,7 +3287,7 @@ html[data-theme="dark"] .project-thumb.mockup-1 {
   line-height: 1.2;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent-primary);
+  color: #111111;
   font-weight: 700;
 }
 
@@ -3603,7 +3603,7 @@ html[data-theme="dark"] .project-thumb.mockup-1 {
 }
 
 html[data-theme="dark"] .project-case-page.project-case-literal .gettingMiniTitle {
-  color: #e8b93a;
+  color: #111111;
 }
 
 html[data-theme="dark"] .project-case-page.project-case-literal .gettingMockup {
