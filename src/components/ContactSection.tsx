@@ -26,7 +26,7 @@ const STICKY_PHRASES = [
 ] as const;
 
 const STICKY_SUCCESS_PHRASES = [
-  "Boa! Você conseguiu 🎉",
+  "Você conseguiu 🎉",
   "Vitória sua dessa vez 👏",
 ] as const;
 
@@ -174,9 +174,6 @@ export default function ContactSection() {
   });
   const [clickFeedback, setClickFeedback] = useState(false);
   const [stickyPhrase, setStickyPhrase] = useState(STICKY_INITIAL_PHRASE);
-  const [stickySuccessPhrase, setStickySuccessPhrase] = useState<string>(
-    STICKY_SUCCESS_PHRASES[0],
-  );
 
   const confettiPieces = useMemo(
     () =>
@@ -298,8 +295,7 @@ export default function ContactSection() {
 
     setCaught(true);
     pointerEngagedRef.current = true;
-    setStickyPhrase("Você conseguiu!");
-    setStickySuccessPhrase(
+    setStickyPhrase(
       STICKY_SUCCESS_PHRASES[
         Math.floor(Math.random() * STICKY_SUCCESS_PHRASES.length)
       ],
@@ -357,7 +353,7 @@ export default function ContactSection() {
             </button>
 
             <div className={`contact-success ${caught ? "is-visible" : ""}`}>
-              {stickySuccessPhrase}
+              Boa. Agora vamos conversar.
             </div>
           </div>
 
